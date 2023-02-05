@@ -126,7 +126,7 @@ bool MainManager::PlayerTurn() {
 
 			for (int i = 0; i < MAP_SIZE; i++) {
 				for (int j = 0; j < MAP_SIZE; j++) {
-					outputFile << b.board[i][j].icon;
+					outputFile << b.board[i][j];
 				}
 				outputFile << "\n";
 			}
@@ -175,7 +175,7 @@ void MainManager::DemandInput() {
 			continue;
 		}
 
-		if (b.board[playerInput.y][playerInput.x].icon != ' ') {
+		if (b.board[playerInput.y][playerInput.x] != ' ') {
 			std::cout << " [!] Coordenada ja en us!" << std::endl;
 			continue;
 		}
@@ -188,7 +188,7 @@ void MainManager::DemandInput() {
 
 void MainManager::FillPlayerPosition() {
 
-	b.board[playerInput.y][playerInput.x].icon = 'X';
+	b.board[playerInput.y][playerInput.x] = 'X';
 
 }
 
@@ -208,7 +208,7 @@ void MainManager::IAInput() {
 		iaInput.x = GenerateRandom(0, MAP_SIZE - 1);
 		iaInput.y = GenerateRandom(0, MAP_SIZE - 1);
 
-		if (b.board[iaInput.y][iaInput.x].icon == ' ') {
+		if (b.board[iaInput.y][iaInput.x] == ' ') {
 			validInput = true;
 		}
 	}
@@ -216,7 +216,7 @@ void MainManager::IAInput() {
 
 void MainManager::FillIAPosition() {
 
-	b.board[iaInput.y][iaInput.x].icon = 'O';
+	b.board[iaInput.y][iaInput.x] = 'O';
 
 }
 
@@ -227,7 +227,7 @@ bool MainManager::CheckWin(char icon) {
 	// HORIZONTAL
 	for (int i = 0; i < MAP_SIZE; i++) {
 
-		if (b.board[i][0].icon == icon && b.board[i][1].icon == icon && b.board[i][2].icon == icon)
+		if (b.board[i][0] == icon && b.board[i][1] == icon && b.board[i][2] == icon)
 			return true;
 
 	}
@@ -235,7 +235,7 @@ bool MainManager::CheckWin(char icon) {
 	// VERTICAL
 	for (int i = 0; i < MAP_SIZE; i++) {
 
-		if (b.board[0][i].icon == icon && b.board[1][i].icon == icon && b.board[2][i].icon == icon)
+		if (b.board[0][i] == icon && b.board[1][i] == icon && b.board[2][i] == icon)
 			return true;
 
 	}
@@ -244,13 +244,13 @@ bool MainManager::CheckWin(char icon) {
 	int i = 0;
 	int j = 0;
 
-	if (b.board[i][j].icon == icon && b.board[i++][j++].icon == icon && b.board[i++][j++].icon == icon)
+	if (b.board[i][j] == icon && b.board[i++][j++] == icon && b.board[i++][j++] == icon)
 		return true;
 
 	i = 2;
 	j = 0;
 
-	if (b.board[i][j].icon == icon && b.board[i--][j++].icon == icon && b.board[i--][j++].icon == icon)
+	if (b.board[i][j] == icon && b.board[i--][j++] == icon && b.board[i--][j++] == icon)
 		return true;
 
 	return hasWin;

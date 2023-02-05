@@ -134,7 +134,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
-    <ClInclude Include="Cell.h" />
     <ClInclude Include="Functionalities.h" />
     <ClInclude Include="MainManager.h" />
     <ClInclude Include="MapPosition.h" />
