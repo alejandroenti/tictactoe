@@ -32,12 +32,16 @@ void MainManager::Game() {
 						currentScene = EXIT;
 						break;
 					default:
-						std::cout << "Enter a valid option!" << std::endl;
+						std::cout << "Entra una opcio valida!" << std::endl;
 						optionValid = false;
 					}
 				} while (!optionValid);
 
 				break;
+
+			case LOAD:
+
+
 			
 			case GAME:
 				b.PrintBoard();
@@ -66,10 +70,10 @@ void MainManager::Game() {
 				b.PrintBoard();
 
 				if (winner == 'X') {
-					std::cout << "You won! Press any key to go to menu.\n" << std::endl;
+					std::cout << "Has guanyat! Prem qualsevol tecla per anar al menu.\n" << std::endl;
 				}
 				else {
-					std::cout << "You lost! Press any key to go to menu.\n" << std::endl;
+					std::cout << "Has perdut! Prem qualsevol tecla per anar al menu.\n" << std::endl;
 				}
 
 				b.ResetBoard();
@@ -80,8 +84,8 @@ void MainManager::Game() {
 
 			case EXIT:
 
-				std::cout << " Goodbye! Hope you enjoyed the game!" << std::endl;
-				std::cout << "\n [+] Programmed by Alejandro Lopez" << std::endl;
+				std::cout << " Adeu! Espero que t'hagi agradat!" << std::endl;
+				std::cout << "\n [+] Programat per Alejandro Lopez" << std::endl;
 				isPlaying = false;
 		}
 
