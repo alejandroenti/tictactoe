@@ -28,4 +28,5 @@ struct MainManager
 	void IAInput();
 	void FillIAPosition();
 	bool CheckWin(char icon);
+	void LoadFile(std::string file);
 };

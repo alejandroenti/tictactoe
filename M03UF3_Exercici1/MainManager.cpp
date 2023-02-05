@@ -5,88 +5,120 @@ void MainManager::Game() {
 	while (isPlaying) {
 
 		switch (currentScene) {
-			case MENU:
-				int optionSelected;
-				bool optionValid;
 
-				do {
-					system("cls");
-					optionValid = true;
-					std::cout << " ---------- Tres en ratlla ----------\n" << std::endl;
-					std::cout << " 1 - Nova partida" << std::endl;
-					std::cout << " 2 - Carregar partida guardada" << std::endl;
-					std::cout << " 3 - Sortir\n" << std::endl;
+		case MENU:
+			int optionSelected;
+			bool optionValid;
+			b.InitializeBoard();
 
-					std::cout << " Tria una opcio: ";
-					std::cin >> optionSelected;
+			do {
+				system("cls");
+				optionValid = true;
+				std::cout << " ---------- Tres en ratlla ----------\n" << std::endl;
+				std::cout << " 1 - Nova partida" << std::endl;
+				std::cout << " 2 - Carregar partida guardada" << std::endl;
+				std::cout << " 3 - Sortir\n" << std::endl;
 
-					switch (optionSelected)
-					{
-					case 1:
-						currentScene = GAME;
-						break;
-					case 2:
-						currentScene = LOAD;
-						break;
-					case 3:
-						currentScene = EXIT;
-						break;
-					default:
-						std::cout << "Entra una opcio valida!" << std::endl;
-						optionValid = false;
-					}
-				} while (!optionValid);
+				std::cout << " Tria una opcio: ";
+				std::cin >> optionSelected;
 
-				break;
+				switch (optionSelected) {
 
-			case LOAD:
-
-
-			
-			case GAME:
-				b.PrintBoard();
-				if (PlayerTurn()) {
-					system("cls");
-					continue;
-				}
-				if (currentScene != GAME) {
-					b.ResetBoard();
+				case 1:
+					currentScene = GAME;
 					break;
+				case 2:
+					currentScene = LOAD;
+					break;
+				case 3:
+					currentScene = EXIT;
+					break;
+				default:
+					std::cout << "Entra una opcio valida!" << std::endl;
+					optionValid = false;
 				}
-				if (CheckWin('X')) {
-					winner = 'X';
-					currentScene = GAMEOVER;
-				}
-				IATurn();
-				if (CheckWin('O')) {
-					winner = 'O';
+			} while (!optionValid);
+
+			break;
+
+		case LOAD:
+
+			bool isValid;
+
+			do {
+
+				isValid = true;
+				std::string fileName;
+
+				std::cout << " Entra el nom del fitxer a carregar [Si s'introdueix \"menu\", es tornara al menu principal]: ";
+				std::cin >> fileName;
+
+				if (fileName.compare("menu") == 0) {
 					currentScene = MENU;
 				}
 
-				break;
+				fileName += ".tictacsave";
+				isValid = CheckIfFileExists(fileName);
 
-			case GAMEOVER:
-
-				b.PrintBoard();
-
-				if (winner == 'X') {
-					std::cout << "Has guanyat! Prem qualsevol tecla per anar al menu.\n" << std::endl;
-				}
-				else {
-					std::cout << "Has perdut! Prem qualsevol tecla per anar al menu.\n" << std::endl;
+				if (isValid) {
+					LoadFile(fileName);
+					currentScene = GAME;
 				}
 
+			} while (!isValid);
+
+			break;
+
+		case GAME:
+
+			b.PrintBoard();
+
+			if (PlayerTurn()) {
+				system("cls");
+				continue;
+			}
+
+			if (currentScene != GAME) {
 				b.ResetBoard();
-
-				currentScene = MENU;
-
 				break;
+			}
 
-			case EXIT:
+			if (CheckWin('X')) {
+				winner = 'X';
+				currentScene = GAMEOVER;
+			}
 
-				std::cout << " Adeu! Espero que t'hagi agradat!" << std::endl;
-				std::cout << "\n [+] Programat per Alejandro Lopez" << std::endl;
-				isPlaying = false;
+			IATurn();
+
+			if (CheckWin('O')) {
+				winner = 'O';
+				currentScene = MENU;
+			}
+
+			break;
+
+		case GAMEOVER:
+
+			b.PrintBoard();
+
+			if (winner == 'X') {
+				std::cout << "Has guanyat! Prem qualsevol tecla per anar al menu.\n" << std::endl;
+			}
+			else {
+				std::cout << "Has perdut! Prem qualsevol tecla per anar al menu.\n" << std::endl;
+			}
+
+			b.ResetBoard();
+
+			currentScene = MENU;
+
+			break;
+
+		case EXIT:
+
+			std::cout << " Adeu! Espero que t'hagi agradat!" << std::endl;
+			std::cout << "\n [+] Programat per Alejandro Lopez" << std::endl;
+			isPlaying = false;
 		}
 
 		system("pause");
@@ -132,7 +164,7 @@ bool MainManager::PlayerTurn() {
 			file.close();
 
 			std::ofstream outputFile;
-			outputFile.open(nameFile + ".titacsave", std::ios::out | std::ios::trunc);
+			outputFile.open(nameFile + ".tictacsave", std::ios::out | std::ios::trunc);
 
 			for (int i = 0; i < MAP_SIZE; i++) {
 				for (int j = 0; j < MAP_SIZE; j++) {
@@ -264,4 +296,17 @@ bool MainManager::CheckWin(char icon) {
 		return true;
 
 	return hasWin;
+}
+
+void MainManager::LoadFile(std::string file) {
+
+	std::ifstream inputFile;
+	inputFile.open(file);
+
+	for (int i = 0; i < MAP_SIZE; i++) {
+		for (int j = 0; j < MAP_SIZE; j++) {
+			inputFile >> b.board[i][j];
+		}
+	}
+
 }

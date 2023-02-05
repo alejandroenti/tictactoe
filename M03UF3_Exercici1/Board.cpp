@@ -1,5 +1,15 @@
 #include "Board.h"
 
+void Board::InitializeBoard() {
+
+	for (int i = 0; i < MAP_SIZE; i++) {
+		for (int j = 0; j < MAP_SIZE; j++) {
+			board[i][j] = ' ';
+		}
+	}
+
+}
+
 void Board::PrintBoard() {
 
 	for (int i = 0; i < MAP_SIZE; i++) {
