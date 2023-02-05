@@ -150,7 +150,7 @@ bool MainManager::PlayerTurn() {
 			}
 
 			std::ifstream file;
-			file.open(nameFile + ".titacsave");
+			file.open(nameFile + ".tictacsave");
 			if (file.is_open()) {
 				std::cout << "\n [!] El fitxer ja existeix el vols sobreescriure? [s/n]: ";
 				std::cin >> option;
@@ -283,16 +283,11 @@ bool MainManager::CheckWin(char icon) {
 	}
 
 	// DIAGONALS
-	int i = 0;
-	int j = 0;
 
-	if (b.board[i][j] == icon && b.board[i++][j++] == icon && b.board[i++][j++] == icon)
+	if (b.board[0][0] == icon && b.board[1][1] == icon && b.board[2][2] == icon)
 		return true;
 
-	i = 2;
-	j = 0;
-
-	if (b.board[i][j] == icon && b.board[i--][j++] == icon && b.board[i--][j++] == icon)
+	if (b.board[2][0] == icon && b.board[1][1] == icon && b.board[0][2] == icon)
 		return true;
 
 	return hasWin;
@@ -303,9 +298,17 @@ void MainManager::LoadFile(std::string file) {
 	std::ifstream inputFile;
 	inputFile.open(file);
 
+	char c;
+
 	for (int i = 0; i < MAP_SIZE; i++) {
 		for (int j = 0; j < MAP_SIZE; j++) {
-			inputFile >> b.board[i][j];
+			inputFile >> std::noskipws >> c;
+			
+			if (c == '\n') {
+				inputFile >> std::noskipws >> c;
+			}
+
+			b.board[i][j] = c;
 		}
 	}
 
