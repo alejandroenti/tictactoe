@@ -9,7 +9,7 @@
 
 struct MainManager
 {
-	enum Scenes {MENU, LOAD, NEWGAME, LOADGAME, GAMEOVER};
+	enum Scenes {MENU, LOAD, GAME, GAMEOVER, EXIT};
 
 	Scenes currentScene = MENU;
 	bool isPlaying = true;

@@ -23,14 +23,13 @@ void MainManager::Game() {
 					switch (optionSelected)
 					{
 					case 1:
-						currentScene = NEWGAME;
+						currentScene = GAME;
 						break;
 					case 2:
-						std::cout << "To implement..." << std::endl;
+						currentScene = LOAD;
 						break;
 					case 3:
-						std::cout << "Goodbye!" << std::endl; // NEW SCENE
-						isPlaying = false;
+						currentScene = EXIT;
 						break;
 					default:
 						std::cout << "Enter a valid option!" << std::endl;
@@ -40,13 +39,13 @@ void MainManager::Game() {
 
 				break;
 			
-			case NEWGAME:
+			case GAME:
 				b.PrintBoard();
 				if (PlayerTurn()) {
 					system("cls");
 					continue;
 				}
-				if (currentScene != NEWGAME) {
+				if (currentScene != GAME) {
 					b.ResetBoard();
 					break;
 				}
@@ -77,6 +76,13 @@ void MainManager::Game() {
 
 				currentScene = MENU;
 
+				break;
+
+			case EXIT:
+
+				std::cout << " Goodbye! Hope you enjoyed the game!" << std::endl;
+				std::cout << "\n [+] Programmed by Alejandro Lopez" << std::endl;
+				isPlaying = false;
 		}
 
 		system("pause");
